@@ -1,0 +1,145 @@
+.App {
+  text-align: center;
+}
+
+.header {
+  background-color: #008081;
+  height: 50px;
+  padding: 20px;
+  color: white;
+}
+
+.survey-submit {
+  width: 30%;
+  height: 40px;
+  background-color: #89CFF0;
+  font-size: 20px;
+  border-radius: 5px;
+  color: #333;
+}
+
+.footer {
+  margin-top: 25px;
+  background-color: #008081;
+  height: 50px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.section-title {
+  font-weight: 500;
+  font-family:sans-serif;
+}
+
+.traits-container {
+  width: auto;
+  display: flex;
+  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.trait-bubble--unselected {
+  display: flex;
+  flex-basis: 150px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 10px 0;
+  margin: 20px;
+  cursor: pointer;
+}
+
+.trait-bubble--selected {
+  display: flex;
+  flex-basis: 150px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 10px 0;
+  margin: 20px;
+  background-color: #89CFF0;
+  cursor: pointer;
+}
+
+.trait-label {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-overflow: inherit;
+}
+
+.self-details-container {
+  display: flex;
+  padding: 20px;
+  justify-content: space-between;
+}
+
+.self-info-section {
+  display: flex;
+  width: 45%;
+  flex-direction: column;
+}
+
+.self-info-section-title {
+  font-weight: 400;
+}
+
+.self-detail-row--allInputs {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.self-detail-row--ranges {
+  display: flex;
+  padding: 10px;
+  margin-bottom: 25px;
+}
+
+.self-detail-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 10px;
+}
+
+.detail-select {
+  /* width: 205px; */
+  width: 55%;
+  height: 30px;
+  padding-left: 10px;
+  font-size: 16px;
+  text-align: left;
+}
+
+.detail-subsection-title {
+  text-align: left;
+  padding: 10px 0 5px 10px;
+}
+
+.input {
+  height: 30px;
+  width: 48%;
+  padding: 0 5px 0 5px;
+  font-size: 16px;
+  text-align: left;
+  margin: 0 5px;
+}
+
+.input-range {
+  width: 80%;
+  margin: 5px;
+}
+
+.range-label {
+  width: 30%;
+  text-align: left;
+}
