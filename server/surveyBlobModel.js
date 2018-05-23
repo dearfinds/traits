@@ -1,5 +1,5 @@
 'use strict';
-const Joi = require('Joi');
+const Joi = require('joi');
 const MongoHelper = require('./mongoHelper');
 
 const COLL_NAME = "survey";
