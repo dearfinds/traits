@@ -11,7 +11,12 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/helloworld', (req, res) => res.send('Hello World!'))
+
+app.get('/api/exists', (req, res) => {
+  console.log(`Exists??|${JSON.stringify(req.query)}|${JSON.stringify(req.params)}`)
+  res.sendStatus(200);
+})
 
 app.post('/api/survey', (req, res) => {
   console.log(`\nGOT THIS FOR SURVEY|||${JSON.stringify(req.body)}`);
@@ -23,5 +28,9 @@ app.post('/api/survey', (req, res) => {
     res.send();
   })
 });
+
+if (process.env.NODE_ENV == 'prod') {
+  app.use('/', express.static('../client/build'))
+}
 
 app.listen(8080, () => console.log(`Backend listening on port 8080!`));
