@@ -1,91 +1,45 @@
 import React, { Component } from 'react';
-import * as _ from 'lodash';
-import * as axios from 'axios';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/header';
 import Footer from './components/footer';
-import PersonTraits from './components/personTraits';
-import AboutYou from './components/aboutYou';
-import { traitsList } from './constants/traits';
-
+import Profile from './components/profile';
+import ContactUs from './components/contactUs';
+import Matches from './components/matches';
+import AboutDear from './components/aboutDear';
+import BetaAccess from  './components/betaAccess';
 import 'react-input-range/lib/css/index.css';
 import 'react-select/dist/react-select.css';
 import './App.css';
 
-const SELECTION_LIMIT = 10;
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selfTraits: [],
-      partnerTraits: [],
-      details: {
-        fullName: "",
-        dob: "",
-        height: 0,
-        weight: 0,
-        caste: "",
-        timeline: "",
-        smoking: "",
-        drinking: "",
-        'work.designation': "",
-        'work.company': "",
-        'work.city': "",
-        'work.pay': 0,
-        'education.grad': "",
-        'education.undergrad': "",
-
-        'pref.pay.range': { min: 50, max: 250 },
-        'pref.height.range': { min: 150, max: 170 },
-        'pref.age.range': { min: 25, max: 30 },
-        'pref.nosmoking': false,
-        'pref.nodrinking': false,
-        'pref.samework': false,
-        'pref.samecaste': false,
-      },
-    };
-
-    this.toggleTrait = this.toggleTrait.bind(this);
-    this.detailUpdate = this.detailUpdate.bind(this);
-    this.submitData = this.submitData.bind(this);
+    this.state = { email: '', verified: false };
   }
 
-  toggleTrait(stateKey, traitLabel) {
-    if(_.size(this.state[stateKey]) < SELECTION_LIMIT && !_.includes(this.state[stateKey], traitLabel)) {
-      this.setState({ [stateKey]: this.state[stateKey].concat(traitLabel) });
-      return;
-    }
-    const updatedTraits = this.state[stateKey].filter(item => item !== traitLabel);
-    this.setState({ [stateKey]: updatedTraits });
-  }
-
-  detailUpdate(field, value) {
-    const updatedDetails = _.defaults({ [field]: value }, this.state.details);
-    this.setState( { details: updatedDetails });
-  }
-
-  submitData() {
-    console.log(this.state);
-    axios.post("http://localhost:8080/api/survey", this.state)
-      .then(res => console.log(`\nSuccessfully updated DB`))
-      .catch(err => console.log(err));
+  accessChange(email) {
+    this.setState({ email, verified: true });
   }
 
   render() {
+    if (!this.state.verified) {
+      return <BetaAccess verified={this.state.verified} onChange={(email)=>this.accessChange(email)} />;
+    }
+    const hoc_profile = () => <Profile email={this.state.email} />;
     return (
-      <div className="App">
-        <Header />
-        <PersonTraits title={"Your Traits"} traitsList={traitsList}
-          toggleTrait={traitName => this.toggleTrait('selfTraits', traitName)}
-          selectedTraits={this.state['selfTraits']}
-        />
-        <PersonTraits title={"Partner Traits"} traitsList={traitsList}
-          toggleTrait={traitName => this.toggleTrait('partnerTraits', traitName)}
-          selectedTraits={this.state['partnerTraits']}
-        />
-        <AboutYou details={this.state.details} detailUpdate={this.detailUpdate}/>
-        <button className="survey-submit" onClick={this.submitData}>Submit</button>
-        <Footer />
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Header />
+          <Switch>
+            <Route exact path="/" component={hoc_profile} />
+            <Route path='/profile' component={hoc_profile} />
+            <Route path='/matches' component={Matches} />
+            <Route path='/about' component={AboutDear} />
+            <Route path='/contact' component={ContactUs} />
+          </Switch>
+          <Footer />
+        </div>
+      </BrowserRouter>
     );
   }
 }

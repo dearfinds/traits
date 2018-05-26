@@ -45,10 +45,10 @@ class AboutYou extends Component {
     return (
       <div className="self-details-container">
         <div className="self-info-section">
-          <h2 className="self-info-section-title">Personal Info</h2>
+          <div className="self-info-section-title">Personal Info</div>
           <div className="self-detail-row--allInputs">
             <input type="text"
-              className="input" placeholder="First (Middle) Last Names"
+              className="input" placeholder="First Name Last Name"
               onChange={event => this.inputFieldOnChange('fullName', event)}/>
             <input type="text" className="input" placeholder="Birth Detail(MM/DD/YY)"
               onChange={event => this.inputFieldOnChange('dob', event)} />
@@ -64,33 +64,36 @@ class AboutYou extends Component {
           <div className="self-detail-row--allInputs">
             <input type="text" className="input" placeholder="Caste"
               onChange={event => this.inputFieldOnChange('caste', event)} />
-            <Select
-              className="detail-select"
-              name="timeline-name"
-              placeholder="Marriage Timeline"
-              value={details.timeline}
-              onChange={selectedOption => this.selectOnChange('timeline', selectedOption)}
-              options={TIMELINE_OPTIONS} />
+            <div className="detail-select">
+              <Select
+                name="timeline-name"
+                placeholder="Marriage Timeline"
+                value={details.timeline}
+                onChange={selectedOption => this.selectOnChange('timeline', selectedOption)}
+                options={TIMELINE_OPTIONS} />
+            </div>
           </div>
 
           <div className="self-detail-row--allInputs">
-            <Select
-              className="detail-select"
-              name="smoking-name"
-              placeholder="Smoking"
-              value={details.smoking}
-              onChange={selectedOption => this.selectOnChange('smoking', selectedOption)}
-              options={CONSUMPTION_OPTIONS} />
-            <Select
-              className="detail-select"
-              name="drinking-name"
-              placeholder="Drinking"
-              value={details.drinking}
-              onChange={selectedOption => this.selectOnChange('drinking', selectedOption)}
-              options={CONSUMPTION_OPTIONS} />
+            <div className="detail-select">
+              <Select
+                name="smoking-name"
+                placeholder="Smoking"
+                value={details.smoking}
+                onChange={selectedOption => this.selectOnChange('smoking', selectedOption)}
+                options={CONSUMPTION_OPTIONS} />
+            </div>
+            <div className="detail-select">
+              <Select
+                name="drinking-name"
+                placeholder="Drinking"
+                value={details.drinking}
+                onChange={selectedOption => this.selectOnChange('drinking', selectedOption)}
+                options={CONSUMPTION_OPTIONS} />
+            </div>
           </div>
 
-          <label className="detail-subsection-title">Work & Education</label>
+          <div className="detail-subsection-title">Work & Education</div>
           <div className="self-detail-row--allInputs">
             <input type="text" className="input" placeholder="Company"
               onChange={event => this.inputFieldOnChange('work.company', event)} />
@@ -113,7 +116,7 @@ class AboutYou extends Component {
         </div>
 
         <div className="self-info-section">
-          <h2 className="self-info-section-title">Preferences</h2>
+          <div className="self-info-section-title">Preferences</div>
 
           <div className="self-detail-row--ranges">
             <div className="range-label">Age</div>

@@ -11,6 +11,7 @@ const rangeSchema = Joi.object().keys({
 });
 
 const surveyBlobSchema = Joi.object().keys({
+  email: Joi.string().email().required(),
   fullName: Joi.string().required(),
   dob: Joi.string().required(),
   height: Joi.number().required(),

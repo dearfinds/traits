@@ -9,9 +9,10 @@ class TraitsPage extends Component {
     return (
       <div className="traits-container">
         {
-          _.map(traitsList, (trait, index) => {
-            return <TraitBubble key={index} label={trait}
-              selected={_.includes(selectedTraits, trait)}
+          _.map(traitsList, ({ label, description }, index) => {
+            return <TraitBubble key={index} label={label}
+              selected={_.includes(selectedTraits, label)}
+              description={description}
               toggleTrait={toggleTrait}
             />
           })

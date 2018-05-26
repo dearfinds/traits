@@ -14,7 +14,11 @@ module.exports = function mongoHelper(collectionName, opts={}) {
   }
 
   function addAll(docs, cb) {
-    _.each(docs, doc => { if (!doc._id) { doc._id = uuid.v4(); } });
+    const timestamp = Date.now();
+    _.each(docs, doc => { if (!doc._id) {
+      doc._id = uuid.v4();
+      doc.timestamp = timestamp;
+    } });
 
     collection().insert(docs, (err, result) => {
       // assert.equal(err, null);
@@ -34,8 +38,9 @@ module.exports = function mongoHelper(collectionName, opts={}) {
   }
 
   function query(filter, cb) {
-    collection().findOne(filter).toArray((err, docs) => {
+    collection().findOne(filter, (err, docs) => {
       // assert.equal(err, null);
+      console.log(`\nDocs Gotten back|${JSON.stringify(docs)}`);
       cb(err, docs);
     });
   }
