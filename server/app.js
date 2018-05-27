@@ -31,12 +31,12 @@ app.post('/api/emailList', (req, res) => {
 
 app.post('/api/verifyBeta', (req, res) => {
   // res.send({ email: 'sampleemail@gmail.com' });
-  betaAccessModel.isValidCode(req.body.code, (err, result) => {
-    if (err || !result) {
+  betaAccessModel.isValidCode(req.body.code, (err, { exists, docs }) => {
+    if (err || !exists) {
       res.sendStatus(400);
       return
     }
-    res.send({ email: result.email });
+    res.send({ email: docs.email });
   });
 });
 
