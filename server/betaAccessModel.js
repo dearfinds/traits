@@ -15,7 +15,10 @@ const betaAccessSchema = Joi.object().keys({
 function isValidCode(code, cb) {
   async.waterfall([
     cb => mongoHelper.query({ code }, cb),
-    (docs, cb) => cb(null, { exists: !_.isEmpty(docs), docs }),
+    (docs, cb) => {
+      console.log(`\nCodeRetrieved||${JSON.stringify(docs)}`);
+      cb(null, { exists: !_.isEmpty(docs), docs })
+    },
   ], cb);
 }
 

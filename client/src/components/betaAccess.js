@@ -22,9 +22,10 @@ class BetaAccess extends Component {
       return
     }
     this.setState({ error: '' });
+    const that = this;
     axios.post(addHost() + "/api/verifyBeta", { code: this.state.code })
       .then(res => {
-        const { onChange } = this.props;
+        const { onChange } = that.props;
         // console.log(`\nRes${JSON.stringify(res)}`);
         onChange(res.data.email);
       })

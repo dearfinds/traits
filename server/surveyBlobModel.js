@@ -1,9 +1,12 @@
 'use strict';
 const Joi = require('joi');
+const _ = require('lodash');
+const async = require('async');
 const MongoHelper = require('./mongoHelper');
 
 const COLL_NAME = "survey";
 const mongoHelper = new MongoHelper(COLL_NAME, {});
+const userModel = require('./models/userModel');
 
 const rangeSchema = Joi.object().keys({
   min: Joi.number().required(),
@@ -40,9 +43,16 @@ const surveyBlobSchema = Joi.object().keys({
     samecaste: Joi.boolean().default(false),
   }),
 });
-//
+
+function add(blob, userId, cb) {
+  async.waterfall([
+    cb => userModel.getUserById(userId, cb),
+    (user, cb) => mongoHelper.add(_.extend(blob, { email: user.email }), cb),
+  ], cb);
+}
+
 module.exports = {
-  add: mongoHelper.add,
+  add,
   addMany: mongoHelper.addMany,
   query: mongoHelper.query,
   update: mongoHelper.update

@@ -23,7 +23,7 @@ function isDOBValid(dobStr) {
     if (!parseInt(tokens[idx], 10)) return false;
   });
   const numTokens = [parseInt(tokens[0], 10), parseInt(tokens[1], 10), parseInt(tokens[2], 10)];
-  if (numTokens[0] < 0 || numTokens[0] > 12) return false;
+  if (numTokens[0] <= 0 || numTokens[0] > 12) return false;
   if (numTokens[2] < 0 || numTokens[2] > 99) return false;
   if ((numTokens[1] > 0 && numTokens[1] < MONTH_DAYS_MAPPING[numTokens[0]] + 1)
     || (numTokens[1] === 29 && numTokens[2]%4 === 0)) {
@@ -147,7 +147,7 @@ class Profile extends Component {
           toggleTrait={traitName => this.toggleTrait('selfTraits', traitName)}
           selectedTraits={this.state['selfTraits']} limit={SELECTION_LIMIT}
         />
-        <PersonTraits title={"You need someone with"} traitsList={traitsList}
+        <PersonTraits title={"You need someone who is"} traitsList={traitsList}
           toggleTrait={traitName => this.toggleTrait('partnerTraits', traitName)}
           selectedTraits={this.state['partnerTraits']} limit={SELECTION_LIMIT}
         />
@@ -155,11 +155,13 @@ class Profile extends Component {
         {
           _.isEmpty(this.state.errors) ? null :
           <div className="survey-errors-wrapper">
-            <ul>
-            {_.map(this.state.errors, (error, index) => {
-              return <li key={index}>{error}</li>;
-            })}
-            </ul>
+            <div className="errors-content">
+              <ul>
+              {_.map(this.state.errors, (error, index) => {
+                return <li key={index}>{error}</li>;
+              })}
+              </ul>
+            </div>
           </div>
         }
         {

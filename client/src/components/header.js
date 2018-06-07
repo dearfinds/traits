@@ -13,7 +13,8 @@ class Header extends Component {
           <Link className="header-nav-item" to='/profile'>PROFILE</Link>
           <Link className="header-nav-item" to='/matches'>MATCHES</Link>
           <Link className="header-nav-item" to='/about'>ABOUT</Link>
-          <Link className="header-nav-item" to='/contact'>CONTACT US</Link>
+          <Link className="header-nav-item" to='/contact'>CONTACT</Link>
+          <Link className="header-nav-item" to='/logout'>LOGOUT</Link>
         </div>
       </div>
     );

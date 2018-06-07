@@ -10,11 +10,14 @@ const dbName = 'deardata';
 
 if (!_.isEmpty(dbconn)) return;
 
-MongoClient.connect(url, function(err, client) {
-  assert.equal(null, err);
-  console.log("Connected to database")
-  dbconn.push(client.db(dbName));
-});
+function startDB(cb) {
+  MongoClient.connect(url, function(err, client) {
+    if (err) return cb(err);
+    console.log("Connected to database")
+    dbconn.push(client.db(dbName));
+    return cb();
+  });
+}
 
 function getDBConn() {
   if (_.size(dbconn) == 0) {
@@ -24,5 +27,6 @@ function getDBConn() {
 }
 
 module.exports = {
+  startDB,
   getDBConn,
 };

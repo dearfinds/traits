@@ -37,7 +37,7 @@ class AboutDear extends Component {
         Keeping this in mind, we ask you the most important questions first - 'What are you as a person?' and 'What kind of a person do you want as your partner?'
       </p>
       <p>
-        We are rolling out access to select customers in beta right now and intend to open up the platform late this year to public use. If you are interested, please signup for our email updates.
+        We are providing access to select customers in beta right now and intend to open up the platform late this year to public use. If you are interested in signing up for Dear, please subscribe to us.
       </p>
       {
         this.state.error ?

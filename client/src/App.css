@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   background-color: #eceef2;
-  font-family: 'Product Sans', sans-serif;
+  font-family: 'Lato';
   letter-spacing: 0.03em;
 }
 
@@ -17,7 +17,7 @@
 
 .text-content {
   text-align: left;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
 }
 
 .header {
@@ -47,6 +47,9 @@
   cursor: pointer;
   text-decoration: none;
   color: black;
+  height: 100%;
+  /* text-decoration: underline; */
+  /* border-bottom: 1px solid #FD5068; */
 }
 
 .header-nav-item:hover {
@@ -108,11 +111,21 @@
 }
 
 .survey-errors-wrapper {
-  margin: auto;
+  /* margin: auto; */
   margin-bottom: 30px;
-  padding: 0 10px;
-  width: 60%;
+  /* padding: 0 10px; */
+  /* width: 60%; */
   /* background-color: #eceef2; */
+  /* border: 2px solid #EA3C5C;
+  border-radius: 10px;
+  text-align: left;
+  list-style-type: circle; */
+}
+
+.errors-content {
+  margin: auto;
+  padding-right: 10px;
+  width: 60%;
   border: 2px solid #EA3C5C;
   border-radius: 10px;
   text-align: left;
@@ -130,7 +143,6 @@
   text-align: left;
   list-style-type: circle;
 }
-
 
 .trait-bubble--unselected {
   display: flex;
