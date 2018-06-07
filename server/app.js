@@ -131,9 +131,9 @@ function create() {
   app.use('/login', loginRedirectMiddleware, express.static(path.join(__dirname, '../login/build')));
 
   // These are necessary for routing within react
-  // app.get('/login*', (req, res) => {
-  //   res.sendFile(path.join(__dirname, '../login/build/index.html'))
-  // });
+  app.get('/login/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../login/build/index.html'))
+  });
 
   app.use('/', authMiddleware, express.static(path.join(__dirname, '../client/build')));
 

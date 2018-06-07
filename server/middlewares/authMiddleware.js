@@ -6,7 +6,7 @@ const LOGIN_NOW = 'Please login';
 function authMiddleware(req, res, next) {
   console.log(`\nCheckingInAuthMID|${JSON.stringify(req.session)}`);
   if (!req.session.login || !req.session.login.userId)
-    return res.redirect('/login');
+    return res.redirect('/login/');
   async.waterfall([
     cb => userModel.getUserById(req.session.login.userId, cb),
     (user, cb) => {
@@ -15,7 +15,7 @@ function authMiddleware(req, res, next) {
     },
   ], (err, result) => {
     if (err) {
-      return res.redirect('/login');
+      return res.redirect('/login/');
     }
     console.log(`Auth checks all done`);
     next();
