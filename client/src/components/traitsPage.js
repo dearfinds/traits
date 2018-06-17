@@ -5,7 +5,7 @@ import _ from 'lodash';
 class TraitsPage extends Component {
   render() {
     const { traitsList, selectedTraits, toggleTrait } = this.props;
-    console.log(`TraitsPage${JSON.stringify(selectedTraits)}`);
+    // console.log(`TraitsPage${JSON.stringify(selectedTraits)}`);
     return (
       <div className="traits-container">
         {

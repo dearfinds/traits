@@ -31,9 +31,11 @@ module.exports = function mongoHelper(collectionName, opts={}) {
   }
 
   function queryAll(filter, cb) {
+    // console.log(`\nCOming in to image|${JSON.stringify(filter)}`);
     collection().find(filter).toArray((err, docs) => {
       // assert.equal(err, null);
-      cb(err, docs);
+      // console.log(`\nDOCS|||${JSON.stringify(docs)}`);
+      cb(err, _.isEmpty(docs) ? []: docs);
     });
   }
 
@@ -42,6 +44,13 @@ module.exports = function mongoHelper(collectionName, opts={}) {
       // assert.equal(err, null);
       console.log(`\nDocs Gotten back|${JSON.stringify(docs)}`);
       cb(err, docs);
+    });
+  }
+
+  function upsert(filter, update, cb) {
+    collection().updateOne(filter, { $set: update }, { upsert: true }, (err, result) => {
+      // assert.equal(err, null);
+      cb(err, result);
     });
   }
 
@@ -65,6 +74,7 @@ module.exports = function mongoHelper(collectionName, opts={}) {
     add,
     queryAll,
     query,
+    upsert,
     removeOne,
     updateOne,
   });

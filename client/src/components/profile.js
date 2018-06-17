@@ -3,9 +3,11 @@ import * as _ from 'lodash';
 import * as axios from 'axios';
 import PersonTraits from './personTraits';
 import AboutYou from './aboutYou';
+import ImageUpload from './imageUpload';
 import { traitsList } from '../constants/traits';
 import { addHost } from '../utils/index';
-
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const SELECTION_LIMIT = 10;
 
 function getChooseLimitTraits(scope) {
@@ -65,16 +67,17 @@ function validateData(data) {
     newErrors.push(`Enter valid Date of Birth in MM/DD/YY format`);
   }
 
+  if (_.size(data.images) < 2) {
+    newErrors.push(`Upload at least 2 pictures`);
+  }
+
   return newErrors;
 }
 
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      errors: [],
-      formSubmitted: false,
-      email: this.props.email,
+    this.initialProfile = {
       selfTraits: [],
       partnerTraits: [],
       details: {
@@ -100,12 +103,39 @@ class Profile extends Component {
         'pref.nodrinking': false,
         'pref.samework': false,
         'pref.samecaste': false,
-      },
+      }
     };
+    this.state = { errors: [], formSubmitted: false, images: [], ...this.initialProfile };
 
     this.toggleTrait = this.toggleTrait.bind(this);
     this.detailUpdate = this.detailUpdate.bind(this);
+    this.onImageRead = this.onImageRead.bind(this);
     this.submitData = this.submitData.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get(addHost() + '/api/survey')
+      .then(({ data: profile }) => {
+        // console.log(`\nprofile returned is||${JSON.stringify(profile)}`);
+        this.setState({
+          selfTraits: profile.selfTraits || [],
+          partnerTraits: profile.partnerTraits || [],
+          details: profile.details || this.initialProfile.details,
+        });
+      })
+      .catch(err => {
+        // console.log(`Failed to get profile`)
+      });
+
+    axios.get(addHost() + '/api/profile_picture')
+      .then(({ data: images }) => {
+        // console.log(`\nImages returned are||${JSON.stringify(images)}`);
+        // console.log(`\nImages size returned are||${_.size(images)}`)
+        this.setState({ images })
+      })
+      .catch(err => {
+        // console.log(`Failed to get profile`)
+      });
   }
 
   toggleTrait(stateKey, traitLabel) {
@@ -122,9 +152,15 @@ class Profile extends Component {
     this.setState( { details: updatedDetails });
   }
 
+  onImageRead(imgData) {
+    // console.log(`\nImagesConcat||${JSON.stringify(this.state)}`);
+    // console.log(`\nImagesConcatData||${JSON.stringify(imgData)}`);
+    this.setState({ images: this.state.images.concat([imgData]) });
+  }
+
   submitData() {
-    console.log(this.state);
-    if (this.state.formSubmitted) return
+    // console.log(this.state);
+    // if (this.state.formSubmitted) return
 
     const newErrors = validateData(this.state);
     if (!_.isEmpty(newErrors)) {
@@ -132,12 +168,26 @@ class Profile extends Component {
       return
     }
     const that = this;
-    axios.post(addHost() + "/api/survey", _.omit(this.state, ['errors', 'formSubmitted']))
+    axios.post(addHost() + "/api/survey", _.omit(this.state, ['errors', 'formSubmitted', 'images']))
       .then(res => {
-        that.setState({ errors: [], formSubmitted: true });
-        console.log(`\nSuccessfully updated profile`)
+        that.setState({ errors: [] });
+        toast('Profile saved', { className: 'profile_saved_toast' });
+        // console.log(`\nSuccessfully updated profile`)
       })
       .catch(err => console.log(err));
+    _.each(this.state.images, image => {
+      // console.log(`\nAbout to submit images|${JSON.stringify(this.state.images)}`);
+      if (_.isEmpty(image._id)) {
+        // console.log(`\nAbout to call backend image post`);
+        axios.post(addHost() + '/api/profile_picture', { imgData: image })
+          .then(res => {
+            // console.log(`Successful at frontend image upload|`)
+          })
+          .catch(err => {
+            // console.log(`Failed at frontend image upload|`)
+          });
+      }
+    });
   }
 
   render() {
@@ -147,11 +197,12 @@ class Profile extends Component {
           toggleTrait={traitName => this.toggleTrait('selfTraits', traitName)}
           selectedTraits={this.state['selfTraits']} limit={SELECTION_LIMIT}
         />
-        <PersonTraits title={"You need someone who is"} traitsList={traitsList}
+        <PersonTraits title={"You prefer a partner who is"} traitsList={traitsList}
           toggleTrait={traitName => this.toggleTrait('partnerTraits', traitName)}
           selectedTraits={this.state['partnerTraits']} limit={SELECTION_LIMIT}
         />
         <AboutYou details={this.state.details} detailUpdate={this.detailUpdate}/>
+        <ImageUpload onImageRead={this.onImageRead} images={this.state.images} />
         {
           _.isEmpty(this.state.errors) ? null :
           <div className="survey-errors-wrapper">
@@ -165,12 +216,13 @@ class Profile extends Component {
           </div>
         }
         {
-          !this.state.formSubmitted ? null :
-          <div className="survey-success-wrapper">
-            <ul>
-              <li>Your profile has been saved</li>
-            </ul>
-          </div>
+          // !this.state.formSubmitted ? null : <ToastContainer />
+          <ToastContainer transition={Slide} hideProgressBar={true} autoClose={2000} />
+          // <div className="survey-success-wrapper">
+          //   <ul>
+          //     <li>Your profile has been saved</li>
+          //   </ul>
+          // </div>
         }
         <button className="survey-submit" onClick={this.submitData}>Find My Dear!</button>
       </div>

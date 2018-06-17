@@ -36,7 +36,7 @@ class App extends Component {
   }
 
   render() {
-    const HOCProfile = () => <Profile email={this.state.email} />;
+    const HOCProfile = () => <Profile /*email={this.state.email}*/ />;
     const HOCBetaAccess = () => <BetaAccess
       verified={this.state.verified} onChange={email => this.accessChange(email)} />
     return (

@@ -1,4 +1,5 @@
 const async = require('async');
+const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -9,13 +10,14 @@ const surveyBlobModel = require('./surveyBlobModel');
 const emailListModel = require('./emailListModel');
 const betaAccessModel = require('./betaAccessModel');
 const userModel = require('./models/userModel');
+const imageModel = require('./models/imageModel');
 const requestUtils = require('./utils/requestUtils');
 // const INVALID_COMBINATION = "Invalid username/password.";
 
 function create() {
   const app = express();
 
-  app.use(bodyParser.json());
+  app.use(bodyParser.json({ limit: '2mb' }));
   app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -27,17 +29,34 @@ function create() {
   // app.get('/helloworld', (req, res) => res.send('Hello World!'))
 
   app.get('/api/exists', (req, res) => {
-    console.log(`\nReqSession||${JSON.stringify(req.session)}`);
-    // if (!res.session.views) res.session.views = { apiexists: 1 };
-    // else res.session.views.apiexists += 1
     res.sendStatus(200);
-    // res.redirect('/');
   });
 
   app.use((req, res, next) => {
     console.log(`\nSessionLogin|${JSON.stringify(req.session)}`);
     next();
-  })
+  });
+
+  app.get('/api/profile_picture', authMiddleware, (req, res) => {
+    imageModel.queryAll({ userId: _.get(req, 'session.login.userId') }, (err, result) => {
+      if (err) res.sendStatus(400);
+      console.log(`ImageResultAtAPPBackend|${JSON.stringify(result)}`);
+      res.send(result);
+    });
+  });
+
+  app.post('/api/profile_picture', authMiddleware, (req, res) => {
+    console.log(`\nFilePrinting||${req.body.imgData.length}`);
+    imageModel.add({
+      userId: _.get(req, 'session.login.userId'),
+      type: 'PROFILE_PICTURE',
+      data: req.body.imgData }, (err, result) => {
+      if (err) {
+        res.sendStatus(500);
+      }
+      res.send();
+    });
+  });
 
   app.post('/api/logout', authMiddleware, (req, res) => {
     requestUtils.removeLoginSessionDetails(req, (err, result) => {
@@ -91,6 +110,7 @@ function create() {
     });
   });
 
+
   app.post('/api/emailList', (req, res) => {
     emailListModel.add(req.body, (err, result) => {
       if (err) {
@@ -112,11 +132,18 @@ function create() {
     });
   });
 
+  app.get('/api/survey', authMiddleware, (req, res) => {
+    surveyBlobModel.query(_.get(req, 'session.login.userId'), (err, result) => {
+      if (err) res.sendStatus(400);
+      res.send(result);
+    });
+  });
+
   app.post('/api/survey',
   authMiddleware,
   (req, res) => {
     console.log(`\nGOT THIS FOR SURVEY|||${JSON.stringify(req.body)}`);
-    surveyBlobModel.add(req.body, req.session.login.userId, (err, result) => {
+    surveyBlobModel.upsert(req.body, _.get(req, 'session.login.userId'), (err, result) => {
       if (err) {
         console.log(err);
         res.sendStatus(500);

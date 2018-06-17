@@ -9,9 +9,15 @@ const TIMELINE_OPTIONS = [
   { value: '20-24 Months', label: '20-24 Months' }
 ];
 
-const CONSUMPTION_OPTIONS = [
+const SMOKING_OPTIONS = [
   { value: 'never', label: 'Never' },
   { value: 'rare', label: 'Rare' },
+  { value: 'often', label: 'Often' }
+];
+
+const DRINKING_OPTIONS = [
+  { value: 'never', label: 'Never' },
+  { value: 'social', label: 'Social' },
   { value: 'often', label: 'Often' }
 ];
 
@@ -47,28 +53,32 @@ class AboutYou extends Component {
         <div className="self-info-section">
           <div className="self-info-section-title">Personal Info</div>
           <div className="self-detail-row--allInputs">
-            <input type="text"
+            <input type="text" value={details['fullName']}
               className="input" placeholder="First Name Last Name"
               onChange={event => this.inputFieldOnChange('fullName', event)}/>
-            <input type="text" className="input" placeholder="Birth Detail(MM/DD/YY)"
+            <input type="text" value={details['dob']}
+              className="input" placeholder="Birth Detail(MM/DD/YY)"
               onChange={event => this.inputFieldOnChange('dob', event)} />
           </div>
 
           <div className="self-detail-row--allInputs">
-            <input type="number" className="input" placeholder="Height (cms)"
+            <input type="number" value={details['height']}
+              className="input" placeholder="Height (cms)"
               onChange={event => this.inputFieldOnChange('height', event)} />
-            <input type="number" className="input" placeholder="Weight (kg)"
+            <input type="number" value={details['weight']}
+              className="input" placeholder="Weight (kg)"
               onChange={event => this.inputFieldOnChange('weight', event)} />
           </div>
 
           <div className="self-detail-row--allInputs">
-            <input type="text" className="input" placeholder="Caste"
+            <input type="text" value={details['caste']}
+              className="input" placeholder="Caste"
               onChange={event => this.inputFieldOnChange('caste', event)} />
             <div className="detail-select">
               <Select
                 name="timeline-name"
                 placeholder="Marriage Timeline"
-                value={details.timeline}
+                value={details['timeline']}
                 onChange={selectedOption => this.selectOnChange('timeline', selectedOption)}
                 options={TIMELINE_OPTIONS} />
             </div>
@@ -79,44 +89,50 @@ class AboutYou extends Component {
               <Select
                 name="smoking-name"
                 placeholder="Smoking"
-                value={details.smoking}
+                value={details['smoking']}
                 onChange={selectedOption => this.selectOnChange('smoking', selectedOption)}
-                options={CONSUMPTION_OPTIONS} />
+                options={SMOKING_OPTIONS} />
             </div>
             <div className="detail-select">
               <Select
                 name="drinking-name"
                 placeholder="Drinking"
-                value={details.drinking}
+                value={details['drinking']}
                 onChange={selectedOption => this.selectOnChange('drinking', selectedOption)}
-                options={CONSUMPTION_OPTIONS} />
+                options={DRINKING_OPTIONS} />
             </div>
           </div>
 
           <div className="detail-subsection-title">Work & Education</div>
           <div className="self-detail-row--allInputs">
-            <input type="text" className="input" placeholder="Company"
+            <input type="text" value={details['work.company']}
+              className="input" placeholder="Company"
               onChange={event => this.inputFieldOnChange('work.company', event)} />
-            <input type="text" className="input" placeholder="City"
+            <input type="text" value={details['work.city']}
+              className="input" placeholder="City"
               onChange={event => this.inputFieldOnChange('work.city', event)} />
           </div>
 
           <div className="self-detail-row--allInputs">
-            <input type="text" className="input" placeholder="Designation"
+            <input type="text" value={details['work.designation']}
+              className="input" placeholder="Designation"
               onChange={event => this.inputFieldOnChange('work.designation', event)} />
-            <input type="number" className="input" placeholder="Annual pay in $"
+            <input type="number" value={details['work.pay']}
+              className="input" placeholder="Annual pay in $"
               onChange={event => this.inputFieldOnChange('work.pay', event)} />
           </div>
           <div className="self-detail-row--allInputs">
-            <input type="text" className="input" placeholder="Grad College"
+            <input type="text" value={details['education.grad']}
+              className="input" placeholder="Grad College"
               onChange={event => this.inputFieldOnChange('education.grad', event)} />
-            <input type="text" className="input" placeholder="Undergrad College"
+            <input type="text" value={details['education.undergrad']}
+              className="input" placeholder="Undergrad College"
               onChange={event => this.inputFieldOnChange('education.undergrad', event)} />
           </div>
         </div>
 
         <div className="self-info-section">
-          <div className="self-info-section-title">Preferences</div>
+          <div className="self-info-section-title">Partner Preferences</div>
 
           <div className="self-detail-row--ranges">
             <div className="range-label">Age</div>

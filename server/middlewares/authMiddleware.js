@@ -4,7 +4,11 @@ const userModel = require('../models/userModel');
 const LOGIN_NOW = 'Please login';
 
 function authMiddleware(req, res, next) {
-  console.log(`\nCheckingInAuthMID|${JSON.stringify(req.session)}`);
+  if (process.env.NODE_ENV !== 'prod') {
+    next();
+  }
+  // console.trace();
+  // console.log(`\nCheckingInAuthMID|${JSON.stringify(req.session)}`);
   if (!req.session.login || !req.session.login.userId)
     return res.redirect('/login/');
   async.waterfall([
