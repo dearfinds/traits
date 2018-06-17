@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import LoginDetails from './loginDetails';
 import axios from 'axios';
 import * as _ from 'lodash';
+import * as DearLogo from '../images/DearLogo.png';
+import * as DearText from '../images/DearText.png';
 
 class LoginAndRegister extends Component {
   constructor(props) {
@@ -31,13 +33,12 @@ class LoginAndRegister extends Component {
   }
 
   submitForm() {
-    const that = this;
     if (this.state.submitForm === "Login") {
       axios.post("/api/login", {
         email: this.state.email,
         password: this.state.password,
       }).then(res => {
-        console.log(`\nLogin Successful`);
+        // console.log(`\nLogin Successful`);
         // that.props.history.push('/');
         window.location.assign('/');
       }).catch(err => {
@@ -50,7 +51,7 @@ class LoginAndRegister extends Component {
         email: this.state.email,
         password: this.state.password,
       }).then(res => {
-        console.log(`\nRegister Successful||${JSON.stringify(res.data)}`);
+        // console.log(`\nRegister Successful||${JSON.stringify(res.data)}`);
         // that.props.history.push('/');
         window.location.assign('/');
       }).catch(err => {
@@ -66,35 +67,45 @@ class LoginAndRegister extends Component {
 
   render() {
     return (
-      <div className="login-register-wrapper">
-        <div className="login-content">
-          <div className="login-register-toggle-wrapper">
-            <a href="" className={ this.state.submitForm === "Login" ?
-                "login-register-toggle-input--selected" : "login-register-toggle-input"}
-              onClick={(e) => {e.preventDefault(); this.formChange("Login")}}
-              >Login</a>
-            <a href="" className={ this.state.submitForm === "Register" ?
-                "login-register-toggle-input--selected" : "login-register-toggle-input"}
-              onClick={(e) => {e.preventDefault(); this.formChange("Register")}}
-              >Sign up</a>
+      <div className="login-app-content">
+        <div className="login-logo">
+          <div className="login-logo-img">
+            <img src={DearLogo} alt="" />
           </div>
-          <LoginDetails
-            value={{ email: this.state.email, password: this.state.password }}
-            emailChange={e => this.valChange('email', e)}
-            passwordChange={e => this.valChange('password', e)}
-            onSubmit={this.submitForm}
-            submitDisplay={this.state.submitForm}
-          />
-          {
-            _.isEmpty(this.state.errors) ? null :
-            <div className="errors-content">
-              <ul>
-              {_.map(this.state.errors, (error, index) => {
-                return <li key={index}>{error}</li>;
-              })}
-              </ul>
+          <div className="login-logo-text">
+            <img src={DearText} alt="" />
+          </div>
+        </div>
+        <div className="login-register-wrapper">
+          <div className="login-content">
+            <div className="login-register-toggle-wrapper">
+              <a href="" className={ this.state.submitForm === "Login" ?
+                  "login-register-toggle-input--selected" : "login-register-toggle-input"}
+                onClick={(e) => {e.preventDefault(); this.formChange("Login")}}
+                >Login</a>
+              <a href="" className={ this.state.submitForm === "Register" ?
+                  "login-register-toggle-input--selected" : "login-register-toggle-input"}
+                onClick={(e) => {e.preventDefault(); this.formChange("Register")}}
+                >Sign up</a>
             </div>
-          }
+            <LoginDetails
+              value={{ email: this.state.email, password: this.state.password }}
+              emailChange={e => this.valChange('email', e)}
+              passwordChange={e => this.valChange('password', e)}
+              onSubmit={this.submitForm}
+              submitDisplay={this.state.submitForm}
+            />
+            {
+              _.isEmpty(this.state.errors) ? null :
+              <div className="errors-content">
+                <ul>
+                {_.map(this.state.errors, (error, index) => {
+                  return <li key={index}>{error}</li>;
+                })}
+                </ul>
+              </div>
+            }
+          </div>
         </div>
       </div>
     );

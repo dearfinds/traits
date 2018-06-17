@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import TraitBubble from './traitBubble';
 import InputRange from 'react-input-range';
+import * as _ from 'lodash';
 
 const TIMELINE_OPTIONS = [
   { value: '3-6 Months', label: '3-6 Months' },
@@ -20,6 +21,21 @@ const DRINKING_OPTIONS = [
   { value: 'social', label: 'Social' },
   { value: 'often', label: 'Often' }
 ];
+
+const InputPOC = (props) => <input {...props} />
+
+const PlaceHolderHOC = (PassedComponent) => ({ divClass='input-wrapper', ...props }) => {
+  const { placeholder, value } = props;
+  return (
+    <div className={divClass}>
+      <span className="placeholder-span">{_.isEmpty(value) ? '' : placeholder}</span>
+      <PassedComponent {...props} />
+    </div>
+  );
+}
+
+const PlaceholderInputHOC = PlaceHolderHOC(InputPOC);
+const PlaceholderDropdownHOC = PlaceHolderHOC(Select);
 
 class AboutYou extends Component {
   constructor(props) {
@@ -53,79 +69,76 @@ class AboutYou extends Component {
         <div className="self-info-section">
           <div className="self-info-section-title">Personal Info</div>
           <div className="self-detail-row--allInputs">
-            <input type="text" value={details['fullName']}
+            <PlaceholderInputHOC type="text" value={details['fullName']}
               className="input" placeholder="First Name Last Name"
               onChange={event => this.inputFieldOnChange('fullName', event)}/>
-            <input type="text" value={details['dob']}
+            <PlaceholderInputHOC type="text" value={details['dob']}
               className="input" placeholder="Birth Detail(MM/DD/YY)"
               onChange={event => this.inputFieldOnChange('dob', event)} />
           </div>
 
           <div className="self-detail-row--allInputs">
-            <input type="number" value={details['height']}
+            <PlaceholderInputHOC type="number" value={details['height']}
               className="input" placeholder="Height (cms)"
               onChange={event => this.inputFieldOnChange('height', event)} />
-            <input type="number" value={details['weight']}
+            <PlaceholderInputHOC type="number" value={details['weight']}
               className="input" placeholder="Weight (kg)"
               onChange={event => this.inputFieldOnChange('weight', event)} />
           </div>
 
           <div className="self-detail-row--allInputs">
-            <input type="text" value={details['caste']}
+            <PlaceholderInputHOC type="text" value={details['caste']}
               className="input" placeholder="Caste"
               onChange={event => this.inputFieldOnChange('caste', event)} />
-            <div className="detail-select">
-              <Select
-                name="timeline-name"
-                placeholder="Marriage Timeline"
-                value={details['timeline']}
-                onChange={selectedOption => this.selectOnChange('timeline', selectedOption)}
-                options={TIMELINE_OPTIONS} />
-            </div>
+            <PlaceholderDropdownHOC
+              name="timeline-name"
+              placeholder="Marriage Timeline"
+              value={details['timeline']}
+              divClass="input-detail-wrapper"
+              onChange={selectedOption => this.selectOnChange('timeline', selectedOption)}
+              options={TIMELINE_OPTIONS} />
           </div>
 
           <div className="self-detail-row--allInputs">
-            <div className="detail-select">
-              <Select
-                name="smoking-name"
-                placeholder="Smoking"
-                value={details['smoking']}
-                onChange={selectedOption => this.selectOnChange('smoking', selectedOption)}
-                options={SMOKING_OPTIONS} />
-            </div>
-            <div className="detail-select">
-              <Select
-                name="drinking-name"
-                placeholder="Drinking"
-                value={details['drinking']}
-                onChange={selectedOption => this.selectOnChange('drinking', selectedOption)}
-                options={DRINKING_OPTIONS} />
-            </div>
+            <PlaceholderDropdownHOC
+              name="smoking-name"
+              placeholder="Smoking"
+              value={details['smoking']}
+              divClass="input-detail-wrapper"
+              onChange={selectedOption => this.selectOnChange('smoking', selectedOption)}
+              options={SMOKING_OPTIONS} />
+            <PlaceholderDropdownHOC
+              name="drinking-name"
+              placeholder="Drinking"
+              value={details['drinking']}
+              divClass="input-detail-wrapper"
+              onChange={selectedOption => this.selectOnChange('drinking', selectedOption)}
+              options={DRINKING_OPTIONS} />
           </div>
 
           <div className="detail-subsection-title">Work & Education</div>
           <div className="self-detail-row--allInputs">
-            <input type="text" value={details['work.company']}
+            <PlaceholderInputHOC type="text" value={details['work.company']}
               className="input" placeholder="Company"
               onChange={event => this.inputFieldOnChange('work.company', event)} />
-            <input type="text" value={details['work.city']}
+            <PlaceholderInputHOC type="text" value={details['work.city']}
               className="input" placeholder="City"
               onChange={event => this.inputFieldOnChange('work.city', event)} />
           </div>
 
           <div className="self-detail-row--allInputs">
-            <input type="text" value={details['work.designation']}
+            <PlaceholderInputHOC type="text" value={details['work.designation']}
               className="input" placeholder="Designation"
               onChange={event => this.inputFieldOnChange('work.designation', event)} />
-            <input type="number" value={details['work.pay']}
+            <PlaceholderInputHOC type="number" value={details['work.pay']}
               className="input" placeholder="Annual pay in $"
               onChange={event => this.inputFieldOnChange('work.pay', event)} />
           </div>
           <div className="self-detail-row--allInputs">
-            <input type="text" value={details['education.grad']}
+            <PlaceholderInputHOC type="text" value={details['education.grad']}
               className="input" placeholder="Grad College"
               onChange={event => this.inputFieldOnChange('education.grad', event)} />
-            <input type="text" value={details['education.undergrad']}
+            <PlaceholderInputHOC type="text" value={details['education.undergrad']}
               className="input" placeholder="Undergrad College"
               onChange={event => this.inputFieldOnChange('education.undergrad', event)} />
           </div>

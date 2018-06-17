@@ -5,6 +5,13 @@
   letter-spacing: 0.03em;
 }
 
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
 .app-content {
   padding: 30px 20px;
   width: 80%;
@@ -31,7 +38,7 @@
 }
 
 .header-navs {
-  flex-basis: 600px;
+  flex-basis: 500px;
   display: flex;
   height: 100%;
   align-items: center;
@@ -75,13 +82,21 @@
 .header .logo {
   display: flex;
   align-items: center;
-  flex-basis: 90px;
+  flex-basis: 120px;
   /* margin-left: 10%; */
   height: 100%;
 }
 
 .header .logo img{
   max-width: 100%;
+}
+
+.logo-img {
+  min-width: 50px;
+}
+
+.logo-text {
+  min-width: 100px;
 }
 
 .survey-submit {
@@ -126,19 +141,11 @@
   padding: 0 20px 20px 20px;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .survey-errors-wrapper {
-  /* margin: auto; */
   margin-bottom: 30px;
-  /* padding: 0 10px; */
-  /* width: 60%; */
-  /* background-color: #eceef2; */
-  /* border: 2px solid #EA3C5C;
-  border-radius: 10px;
-  text-align: left;
-  list-style-type: circle; */
 }
 
 .errors-content {
@@ -212,7 +219,7 @@
 
 .self-details-container {
   display: flex;
-  padding: 20px;
+  padding: 0 20px;
   flex-direction: column;
   /* justify-content: space-between; */
 }
@@ -235,10 +242,11 @@
 
 .self-detail-row--allInputs {
   width: 100%;
-  padding: 10px;
+  padding: 5px 10px;
   display: flex;
   justify-content: space-between;
   flex-wrap: nowrap;
+  align-items: flex-end;
 }
 
 .self-detail-row--ranges {
@@ -263,11 +271,10 @@
 
 .input {
   height: 30px;
-  width: 50%;
+  min-width: 50%;
   padding: 0 5px;
   font-size: 16px;
   text-align: left;
-  margin: 0 5px;
 }
 
 .input-range {
@@ -294,12 +301,13 @@
   color: white;
   font-size: 20px;
   font-weight: 400px;
-  margin: -5px;
 }
 
 .know-more-signup-submit {
   margin-top: 40px;
-  margin-left: 20%;
+  margin: 5% 20%;
+  display: flex;
+  justify-content: center;
 }
 
 .image-uploader-wrapper {
@@ -356,4 +364,30 @@
   border-radius: 5px;
   background-color: #FD5068;
   color: white;
+}
+
+.placeholder-span {
+  color: #3B5998;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  justify-content: left;
+  font-style: italic;
+  min-height: 15px;
+}
+
+.input-wrapper {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin: 1px 5px;
+}
+
+.input-detail-wrapper {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin: 1px 5px;
+  text-align: left;
+  /* box-sizing: content-box; */
 }

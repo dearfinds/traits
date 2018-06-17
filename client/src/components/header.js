@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DearLogo from '../images/DearLogo.png';
+import DearText from '../images/DearText.png';
 import { Link } from 'react-router-dom';
 
 class Header extends Component {
@@ -27,7 +28,12 @@ class Header extends Component {
     return (
       <div className="header">
         <div className="logo">
-          <img src={DearLogo} alt="" />
+          <div className="logo-img">
+            <img src={DearLogo} alt="" />
+          </div>
+          <div className="logo-text">
+            <img src={DearText} alt="" />
+          </div>
         </div>
         <div className="header-navs">
           <LinkWrap title="PROFILE" to="/profile" />

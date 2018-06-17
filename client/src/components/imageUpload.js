@@ -19,7 +19,7 @@ class ImageUploader extends Component {
     const { onImageRead } = this.props
     return (
       <div className="image-uploader-wrapper">
-        <div className="section-title">Put a face for the profile</div>
+        <div className="section-title">Upload your pictures</div>
         <div className="image-uploader-content">
           {_.map([0,1,2,3], idx =>
             <ImageUploadBlob key={idx} onImageRead={onImageRead} image={this.getImage(idx)} />

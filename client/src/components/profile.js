@@ -83,8 +83,8 @@ class Profile extends Component {
       details: {
         fullName: "",
         dob: "",
-        height: 0,
-        weight: 0,
+        height: "",
+        weight: "",
         caste: "",
         timeline: "",
         smoking: "",
@@ -92,7 +92,7 @@ class Profile extends Component {
         'work.designation': "",
         'work.company': "",
         'work.city': "",
-        'work.pay': 0,
+        'work.pay': "",
         'education.grad': "",
         'education.undergrad': "",
 

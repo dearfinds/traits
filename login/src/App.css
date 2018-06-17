@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  background-color: #eceef2;
   font-family: 'Lato';
   letter-spacing: 0.03em;
 }
@@ -17,14 +16,15 @@
 
 .login-register-wrapper {
   background-color: white;
+  width: auto;
 }
 
 .login-content {
-  width: 40%;
+  min-width: 360px;
   margin: auto;
   display: flex;
   flex-direction: column;
-  margin-top: 10%;
+  margin-top: 5%;
   border: 1px solid #CCC;
   border-radius: 5px;
   padding: 0px 20px 40px 20px;
@@ -66,4 +66,35 @@
 .login-register-toggle-input--selected {
   text-decoration: none;
   color: #FD5068;
+}
+
+.login-logo {
+  display: flex;
+  flex-direction: row;
+  height: 100px;
+}
+
+.login-logo-img {
+  display: flex;
+}
+
+.login-logo-img img {
+  max-height: 70px;
+}
+
+.login-logo-text {
+  display: flex;
+}
+
+.login-logo-text img {
+  max-height: 70px;
+}
+
+.login-app-content {
+  padding-top: 100px;
+  /* height: auto; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

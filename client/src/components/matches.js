@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Matches extends Component {
   render() {
-    return <div className="app-content text-content">This section is upcoming.  Keep an eye out.</div>;
+    return <div className="app-content text-content">You should see matches post verification.  Keep an eye out on this page.</div>;
   }
 }
 

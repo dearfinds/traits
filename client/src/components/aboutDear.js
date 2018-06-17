@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as EmailValidator from 'email-validator';
 import { addHost } from '../utils/index';
 import * as axios from 'axios';
+import { ToastContainer, toast, Slide } from 'react-toastify';
 
 class AboutDear extends Component {
   constructor(props) {
@@ -20,7 +21,10 @@ class AboutDear extends Component {
     if (EmailValidator.validate(this.state.email)) {
       this.setState({ error: '' });
       axios.post(addHost() + "/api/emailList", { email: this.state.email })
-        .then(res => console.log(`\nSuccessfully added email`))
+        .then(res => {
+          // console.log(`\nSuccessfully added email`)
+          toast('You are subscribed', { className: 'profile_saved_toast' });
+        })
         .catch(err => console.log(err));
     } else {
       this.setState({ error: 'Please enter valid email' });
@@ -28,7 +32,7 @@ class AboutDear extends Component {
   }
 
   render() {
-    return <div className="app-content text-content">
+    return <div className="app-content text-content about-dear-content">
       <p>
         Dear is a partner finding platform that imbibes the science of marriage.
         We believe that matching people based on their personal traits proves more effective than matching people by any other social, physical, societal, ethnic characteristics.
@@ -37,17 +41,20 @@ class AboutDear extends Component {
         Keeping this in mind, we ask you the most important questions first - 'What are you as a person?' and 'What kind of a person do you want as your partner?'
       </p>
       <p>
-        We are providing access to select customers in beta right now and intend to open up the platform late this year to public use. If you are interested in signing up for Dear, please subscribe to us.
+        We are providing access to select customers in beta right now and intend to open up the platform late this year to public use. If you are interested in participating or hearing more, please subscribe to us.
       </p>
       {
         this.state.error ?
         <div className="survey-errors-wrapper">
-          <ul>
-            <li>{this.state.error}</li>
-          </ul>
+          <div className="errors-content">
+            <ul>
+              <li>{this.state.error}</li>
+            </ul>
+          </div>
         </div>
         : null
       }
+      <ToastContainer transition={Slide} hideProgressBar={true} autoClose={2000} />
       <div className="know-more-signup-submit">
         <input type="email" className="input" placeholder="Email"
           value={this.state.email} onChange={e => this.emailOnChange(e)}/>
